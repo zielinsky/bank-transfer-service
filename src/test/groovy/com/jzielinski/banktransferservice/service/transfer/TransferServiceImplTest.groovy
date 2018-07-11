@@ -23,11 +23,7 @@ class TransferServiceImplTest extends Specification {
         result.fromAccount == 1
         result.toAccount == 2
         result.amount == 50
-        1 * transferRepository.save({
-            it.fromAccount == 1
-            it.toAccount == 2
-            it.amount == 50
-        } as Transfer)
+        1 * transferRepository.save({ it.fromAccount == 1 && it.toAccount == 2 && it.amount == 50 })
     }
 
     def "should transfer money between accounts"() {

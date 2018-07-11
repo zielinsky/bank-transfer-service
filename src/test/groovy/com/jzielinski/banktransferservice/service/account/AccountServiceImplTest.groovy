@@ -70,10 +70,7 @@ class AccountServiceImplTest extends Specification {
         account != null
         account.id == 1
         account.balance == 100
-        1 * accountRepository.save({
-            it.id == 1
-            it.balance == 100
-        } as Account)
+        1 * accountRepository.save({ it.id == 1 && it.balance == 100 })
     }
 
     def "should create a new account with initial balance of zero"() {
@@ -87,9 +84,6 @@ class AccountServiceImplTest extends Specification {
         account != null
         account.id == 1
         account.balance == 0
-        1 * accountRepository.save({
-            it.id == 1
-            it.balance == 0
-        } as Account)
+        1 * accountRepository.save({ it.id == 1 && it.balance == 0 })
     }
 }
