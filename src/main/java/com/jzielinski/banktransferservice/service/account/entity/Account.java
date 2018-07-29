@@ -25,11 +25,11 @@ public class Account {
         this.balance = initialBalance;
     }
 
-    public void creditAccount(BigDecimal amount) {
+    public synchronized void creditAccount(BigDecimal amount) {
         balance = balance.add(amount);
     }
 
-    public void debitAccount(BigDecimal amount) {
+    public synchronized void debitAccount(BigDecimal amount) {
         if(!hasEnoughFunds(amount)) {
             throw new NotEnoughFundsException();
         }

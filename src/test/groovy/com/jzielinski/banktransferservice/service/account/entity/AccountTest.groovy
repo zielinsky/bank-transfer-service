@@ -55,4 +55,30 @@ class AccountTest extends Specification {
         then:
         thrown(NotEnoughFundsException)
     }
+
+    def "debitAccount should be thread safe" () {
+        given:
+        def account = new Account(1, BigDecimal.valueOf(100))
+        def threads = (0..<100).collect { new Thread({ account.debitAccount(BigDecimal.valueOf(1)) })}
+
+        when:
+        threads.each { it.start() }
+        threads.each { it.join() }
+
+        then:
+        account.getBalance() == BigDecimal.valueOf(0)
+    }
+
+    def "creditAccount should be thread safe" () {
+        given:
+        def account = new Account(1, BigDecimal.valueOf(0))
+        def threads = (0..<100).collect { new Thread({ account.creditAccount(BigDecimal.valueOf(1)) })}
+
+        when:
+        threads.each { it.start() }
+        threads.each { it.join() }
+
+        then:
+        account.getBalance() == BigDecimal.valueOf(100)
+    }
 }
